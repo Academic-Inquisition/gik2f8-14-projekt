@@ -1,0 +1,18 @@
+{
+  "playListName": "string",
+  "authors": [
+    "authorName/as/string"
+  ],
+  "songs": [
+    {
+      "songName": "string",
+      "releaseYear": "dateTime/as/string",
+      "artists": [
+        "name/as/string"
+      ],
+      "albumName": "string",
+      "albumArt": "path/as/string",
+      "songLength": "lenghtInSeconds/as/integer"
+    }
+  ]
+}
