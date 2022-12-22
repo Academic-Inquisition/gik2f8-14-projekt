@@ -10,7 +10,51 @@
     <title>Filthy John's Beat and Soundtrack Emporium</title>
     <link rel="stylesheet" href="../css/index.css"/>
   </head>
-  <body>
+  <body class="">
+    <section id="section--sidebar" class="w-{calc(2/7)%} h-1/1">
+      <button
+              type="button" class="btn btn-primary"
+              data-bs-toggle="collapse" data-bs-target="#addSongForm"
+              aria-expanded="false" aria-controls="addSongForm">
+        Add Song
+      </button>
+      <div class="collapse" id="form--song__add">
+        <div class="card card-body">
+          <div id="form--add__name">
+            <label for="add--name" class="form-label"></label>
+            <input type="email" class="form-control" id="add--name" placeholder="name@example.com">
+          </div>
+          <div id="form--add__year">
+            <label for="add--year" class="form-label"></label>
+            <input type="email" class="form-control" id="add--year" placeholder="name@example.com">
+          </div>
+          <div id="form--add__artists">
+            <label for="add--artists" class="form-label"></label>
+            <textarea class="form-control" id="add--artists" rows="5"></textarea>
+          </div>
+          <div id="form--add__albumname">
+            <label for="add--album__name" class="form-label"></label>
+            <input type="email" class="form-control" id="add--album__name" placeholder="name@example.com">
+          </div>
+          <div id="form--add__albumart">
+            <label for="add--album__art" class="form-label"></label>
+            <input type="email" class="form-control" id="add--album__art" placeholder="name@example.com">
+          </div>
+          <div id="form--add__length">
+            <label for="add--length" class="form-label"></label>
+            <input type="email" class="form-control" id="add--length" placeholder="name@example.com">
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="section--content" class="w-{calc(4/7)} h-auto">
 
+    </section>
+    <section id="section--toasts" class="w-{calc(1/7)} h-auto">
+
+    </section>
   </body>
+  <footer id="footer">
+
+  </footer>
 </html>
