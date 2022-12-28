@@ -1,0 +1,28 @@
+#footer{
+    background: rgb(9,9,121);
+    background: linear-gradient(90deg, rgba(9,9,121,0.75) 0%, rgba(0,198,255,0.5746673669467788) 50%, rgba(9,9,121,0.75) 100%);
+}
+#footer h3{
+    font-size: 1.65rem;
+    font-weight: 700;
+    text-align: center;
+}
+
+#footer p{
+    font-size: 1rem;
+    text-align: center;
+    font-weight: 400;
+    font-style: italic;
+}
+#footer h4{
+    text-align: center;
+    font-weight: 600;
+    font-size: 1.2rem;
+}
+.header__h1{
+    text-align: center;
+    font-size: 4rem;
+    background: rgb(9,9,121);
+    background: linear-gradient(90deg, rgba(9,9,121,0.75) 0%, rgba(0,198,255,0.5746673669467788) 50%, rgba(9,9,121,0.75) 100%);
+    padding-bottom: .5rem;
+}
