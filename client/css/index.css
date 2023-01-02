@@ -1,3 +1,30 @@
+/*Styles följer strukturen på sidan från uppifrån till vänster.*/
+
+/*Alla header styles*/
+.header__h1{
+    text-align: center;
+    font-size: 4rem;
+    background: rgb(9,9,121);
+    background: linear-gradient(90deg, rgba(9,9,121,0.75) 0%, rgba(0,198,255,0.5746673669467788) 50%, rgba(9,9,121,0.75) 100%);
+    padding-bottom: .5rem;
+}
+
+/*Sidebar styles*/
+#sidebar {
+    background-color: rgb(194, 164, 32); /*Senap sidebar mums*/
+}
+
+/*Styles för spellistornas innehåll*/
+#content{
+    background-color: rgb(52, 190, 52);
+}
+
+/*Formulär styles*/
+#form__add-song{
+    background-color: bisque;
+}
+
+/*Alla footer styles*/
 #footer{
     background: rgb(9,9,121);
     background: linear-gradient(90deg, rgba(9,9,121,0.75) 0%, rgba(0,198,255,0.5746673669467788) 50%, rgba(9,9,121,0.75) 100%);
@@ -6,6 +33,7 @@
     font-size: 1.65rem;
     font-weight: 700;
     text-align: center;
+    font-family: serif;
 }
 
 #footer p{
@@ -18,11 +46,4 @@
     text-align: center;
     font-weight: 600;
     font-size: 1.2rem;
-}
-.header__h1{
-    text-align: center;
-    font-size: 4rem;
-    background: rgb(9,9,121);
-    background: linear-gradient(90deg, rgba(9,9,121,0.75) 0%, rgba(0,198,255,0.5746673669467788) 50%, rgba(9,9,121,0.75) 100%);
-    padding-bottom: .5rem;
 }
