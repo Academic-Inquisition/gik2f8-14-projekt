@@ -15,4 +15,4 @@ const PlayList = (songs) => {
     html += `</table>`;
 
     return html;
-};
+}
