@@ -7,7 +7,7 @@ const PlayList = (songs) => {
                         <th class="pr-12">År</th>
                         <th>Längd</th>
                     </tr>`;
-    
+
     songs.forEach(song => {
         html += SongInfo(song);
     })

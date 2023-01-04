@@ -5,6 +5,7 @@ let albumNameValid = false;
 let albumArtValid = true;
 let songLengthValid = true;
 
+const form = document.getElementById('form')
 const songName = form.addName;
 const year = form.addYear;
 const artists = form.addArtists
@@ -140,7 +141,7 @@ function saveSong() {
         songLength: form.addLength.value
     };
     
-    //api.create(song).then((song) => { if (song) renderPlayList() });
+    api.create(song).then((song) => { if (song) renderPlayList() });
     
     songName.value = '';
     year.value = '';
@@ -156,72 +157,13 @@ function saveSong() {
 }
 
 function renderPlayList() {
-    //api.getAll().then(songs => {
+    api.getAll().then(songs => {
         playlist.innerHTML = '';
         if (songs && songs.length > 0) {
             playlist.insertAdjacentHTML('beforeend', PlayList(songs));
         }
-    //});
-}
-
-/* const PlayList = (songs) => {
-    let html = `<table id ="playlist" class="border border-separate border-spacing-y-2 border-spacing-2">
-                    <tr class="">
-                        <th class="pr-4">#</th>
-                        <th class="pr-12">Titel</th>
-                        <th class="pr-12">Album</th>
-                        <th class="pr-12">År</th>
-                        <th>Längd</th>
-                    </tr>`;
-    
-    songs.forEach(song => {
-        html += SongInfo(song);
-    })
-
-    html += `</table>`;
-
-    return html;
-}
-
-const SongInfo = (song) => {
-    let artists = "";
-    let image = song.albumArt;          // Grabs the coverImage string
-    if (!image) {                         // If it doesn't exist then replace it with the wikimedia "No-Image-Placeholder.svg".
-        image = "https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg";
-    }
-    
-    song.artists.forEach(artist => {
-        if (!(song.artists.indexOf(artist) > 2)){
-            artists += artist;
-        }
-
-        if (song.artists.indexOf(artist) < song.artists.length - 1 && !(song.artists.indexOf(artist) > 1)) {
-            artists += ", ";
-        }
-
-        if (song.artists.indexOf(artist) == 2) {
-            artists += ", ...";
-        }
     });
-
-    let html = `<tr>
-                    <td>${song.id + 1}</td>
-                    <td class="pr-12">
-                        <div class="flex flex-row">
-                            <img src="${image}" alt="Album Cover Image" width="80" height="80">
-                            <div class="flex flex-col justify-content-center">
-                                <p class="pb-2 pl-4">${song.songName}</p>
-                                <p class="pl-4">${artists}</p>
-                            </div>
-                        </div>
-                    </td>
-                    <td class="pr-12">${song.albumName}</td>
-                    <td class="pr-12">${song.releaseYear}</td>
-                    <td class="pr-12">${song.songLength}</td>
-                </tr>`;
-
-    return html;
-} */
+}
 
 const songs = [
     {
