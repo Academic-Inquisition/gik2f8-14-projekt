@@ -1,4 +1,5 @@
 {
+  "id": "integer",
   "playListName": "string",
   "authors": [
     "authorName/as/string"
