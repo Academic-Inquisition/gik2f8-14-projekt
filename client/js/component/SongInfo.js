@@ -6,10 +6,14 @@ const SongInfo = (song) => {
     }
     
     song.artists.forEach(artist => {
-        artists += artist;
-        if (song.artists.indexOf(artist) < song.artists.length - 1) {
+        if (!(song.artists.indexOf(artist) > 2)){
+            artists += artist;
+        }
+
+        if (song.artists.indexOf(artist) < song.artists.length - 1 && !(song.artists.indexOf(artist) > 1)) {
             artists += ", ";
         }
+
         if (song.artists.indexOf(artist) == 2) {
             artists += ", ...";
         }
