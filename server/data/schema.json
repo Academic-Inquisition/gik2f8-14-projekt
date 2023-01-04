@@ -12,7 +12,7 @@
       ],
       "albumName": "string",
       "albumArt": "path/as/string",
-      "songLength": "lenghtInSeconds/as/integer"
+      "songLength": "lengthInSeconds/as/integer"
     }
   ]
 }
