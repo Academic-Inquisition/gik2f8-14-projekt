@@ -77,7 +77,17 @@ function validateField(field) {
             break;
         }
         case 'addLength': {
-            songLengthValid = true;
+            if (value.length === 0){
+                songNameValid = false;
+                validationMessage = "Fältet 'Song length' är obligatoriskt!";
+            }
+            else if (value.length !== 5){
+                songLengthValid = true;
+                validationMessage = "Använd formatet mm:ss!";
+            }
+            else {
+                songLengthValid = true;
+            }
             break;
         }
     }
@@ -198,7 +208,7 @@ const SongInfo = (song) => {
                     <td>${song.id + 1}</td>
                     <td class="pr-12">
                         <div class="flex flex-row">
-                            <img src="${image}" alt="Album Cover Image" width="80" height="auto">
+                            <img src="${image}" alt="Album Cover Image" width="80" height="80">
                             <div class="flex flex-col justify-content-center">
                                 <p class="pb-2 pl-4">${song.songName}</p>
                                 <p class="pl-4">${artists}</p>
