@@ -14,7 +14,31 @@ app
     next();
   });
 
+// Get Index (R, Read)
 app.get('/', async (req, res) => {
+
+})
+
+// Add Playlist (C, Create)
+app.put('/playlist/', async (req, res) => {
+
+})
+
+// Get Playlist (R, Read)
+app.get('/playlist/:id', async (req, res) => {
+    try {
+        const buffer = await fs.readFile('./data/playlists.json');
+        let list = JSON.parse(buffer);
+        const file = await fs.readFile('./data/playlist/' + list[req.params.id]);
+        let playlist = JSON.parse(file);
+        res.send(playlist);
+    } catch (e) {
+        res.status(500).send({e});
+    }
+})
+
+// Delete Playlist (D, Delete)
+app.delete('/playlist/:id', async (req, res) => {
 
 })
 
