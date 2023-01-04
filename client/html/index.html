@@ -22,78 +22,79 @@
               <div id="form__add-name">
                 
                 <div class="flex">
-                  <label for="add-name" class="form-label">Song name</label>
-                  <p class="message pt-0.5 pl-2 text-sm text-red-700 hidden">
+                  <label for="addName" class="form-label">Song name</label>
+                  <p id="songError" class="message pt-0.5 pl-2 text-sm text-red-700 hidden">
                     Error message
                   </p>
                 </div>
-                <input type="text" class="form-control mb-4" id="add-name" placeholder="Song name">
+                <input name="addName" type="text" class="form-control mb-4" id="addName" placeholder="Song name">
               </div>
               <div id="form__add-year">
                 <div class="flex">
-                  <label for="add-year" class="form-label">Release year</label>
-                  <p class="message pt-0.5 pl-2 text-sm text-red-700 hidden">
+                  <label for="addYear" class="form-label">Release year</label>
+                  <p id="yearError" class="message pt-0.5 pl-2 text-sm text-red-700 hidden">
                     Error message
                   </p>
                 </div>
-                <input type="text" class="form-control mb-4" id="add-year" placeholder="Release year">
+                <input name="addYear" type="text" class="form-control mb-4" id="addYear" placeholder="Release year">
               </div>
               <div id="form__add-artists">
                 <div class="flex">
-                  <label for="add-artists" class="form-label">Artists</label>
-                  <p class="message pt-0.5 pl-2 text-sm text-red-700 hidden">
+                  <label for="addArtists" class="form-label">Artists</label>
+                  <p id="artistsError" class="message pt-0.5 pl-2 text-sm text-red-700 hidden">
                     Error message
                   </p>
                 </div>
-                <textarea class="form-control mb-4" id="add-artists" rows="5"></textarea>
+                <textarea name="addArtists" class="form-control mb-4" id="addArtists" rows="5"></textarea>
               </div>
               <div id="form__add-albumname">
                 <div class="flex">
-                  <label for="add-albumname" class="form-label">Album name</label>
-                  <p class="message pt-0.5 pl-2 text-sm text-red-700 hidden">
+                  <label for="addAlbumName" class="form-label">Album name</label>
+                  <p id="albumError" class="message pt-0.5 pl-2 text-sm text-red-700 hidden">
                     Error message
                   </p>
                 </div>
-                <input type="text" class="form-control mb-4" id="add-albumname" placeholder="Album name">
+                <input name="addAlbumName" type="text" class="form-control mb-4" id="addAlbumName" placeholder="Album name">
               </div>
               <div id="form__add-albumart">
                 <div class="flex">
-                  <label for="add__album-art" class="form-label">Album art (Optional)</label>
-                  <p class="message pt-0.5 pl-2 text-sm text-red-700 hidden">
+                  <label for="addAlbumArt" class="form-label">Album art (Optional)</label>
+                  <p id="artError" class="message pt-0.5 pl-2 text-sm text-red-700 hidden">
                     Error message
                   </p>
                 </div>
-                <input type="text" class="form-control mb-4" id="add__album-art" placeholder="Link to album art">
+                <input name="addAlbumArt" type="text" class="form-control mb-4" id="addAlbumArt" placeholder="Link to album art">
               </div>
               <div id="form__add-length">
                 <div class="flex">
-                  <label for="add-length" class="form-label">Song length (Optional)</label>
-                  <p class="message pt-0.5 pl-2 text-sm text-red-700 hidden">
+                  <label for="addLength" class="form-label">Song length (Optional)</label>
+                  <p id="lengthError" class="message pt-0.5 pl-2 text-sm text-red-700 hidden">
                     Error message
                   </p>
                 </div>
-                <input type="text" class="form-control mb-4" id="add-length" placeholder="Length (seconds)">
+                <input name="addLength" type="text" class="form-control mb-4" id="addLength" placeholder="Length (seconds)">
               </div>
+              <button name="submit" type="submit" class="rounded-md bg-blue-300 hover:bg-blue-400 px-4 py-1">Spara</button>
             </form>
         </section>
         <section id="content" class="w-3/6">
           <h2 class="mb-6 text-3xl text-indigo-900">Aktuell Spellista</h2>
-          <table class="border border-separate border-spacing-y-2 border-spacing-2">
-            <tr class="">
+          <table id ="playlist" class="border border-separate border-spacing-y-2 border-spacing-2">
+            <!-- <tr class="">
               <th class="pr-4">#</th>
               <th class="pr-12">Titel</th>
               <th class="pr-12">Album</th>
               <th class="pr-12">År</th>
               <th>Längd</th>
-            </tr>
-            <tr>
+            </tr> -->
+            <!-- <tr>
               <td>1</td>
               <td class="pr-12">
                 <div class="flex flex-row">
-                  <img src="https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg" alt="Album Cover Image" width="80" height="auto">
+                  <img src="https://www.albumartexchange.com/coverart/_tn/me/metallica_metallicablackalbum_73p.jpg" alt="Album Cover Image" width="80" height="80">
                   <div class="flex flex-col justify-content-center">
-                    <p class="pb-2 pl-2">Nothing Else Matters</p>
-                    <p class="pl-2">Metallica</p>
+                    <p class="pb-2 pl-4">Nothing Else Matters</p>
+                    <p class="pl-4">Metallica</p>
                   </div>
                 </div>
               </td>
@@ -105,17 +106,17 @@
               <td>2</td>
               <td class="pr-12">
                 <div class="flex flex-row">
-                  <img src="https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg" alt="Album Cover Image" width="80" height="auto">
+                  <img src="https://www.albumartexchange.com/coverart/_tn/le/ledzeppelin_ledzeppeliniv12_crcx.jpg" alt="Album Cover Image" width="80" height="auto">
                   <div class="flex flex-col justify-content-center">
-                    <p class="pb-2 pl-2">Stairway to Heaven</p>
-                    <p class="pl-2">Led Zeppelin</p>
+                    <p class="pb-2 pl-4">Stairway to Heaven</p>
+                    <p class="pl-4">Led Zeppelin</p>
                   </div>
                 </div>
               </td>
               <td class="pr-12">Led Zeppelin IV</td>
               <td class="pr-12">1971</td>
               <td class="pr-12">8:02</td>
-            </tr>
+            </tr> -->
           </table>
         </section>
         <section id="toasts" class="w-1/6">
@@ -132,11 +133,14 @@
         <ul class="flex flex-column items-center pt-2 pb-4">
           <div class="flex items-center space-x-6">
             <li><h4><a class="" href="mailto: h21mnygr@du.se">Markus</a></h4></li>
-            <li> <h4><a class="" href="mailto: h21tisto@du.se"> Tim</a></h4></li>
-            <li><h4><a class="" href="mailto: h21simos@du.se"> Simon</a></h4></li>
+            <li> <h4><a class="" href="mailto: h21tisto@du.se">Tim</a></h4></li>
+            <li><h4><a class="" href="mailto: h21simos@du.se">Simon</a></h4></li>
           </div>
         </ul>
       </div>
     </footer>
+    <script src="../js/script.js"></script>
+    <script src="../js/component/SongInfo.js"></script>
+    <script src="../js/component/PlayList.js"></script>
   </body>
 </html>

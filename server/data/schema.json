@@ -5,6 +5,7 @@
   ],
   "songs": [
     {
+      "id": "index/as/integer",
       "songName": "string",
       "releaseYear": "dateTime/as/string",
       "artists": [
