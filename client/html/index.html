@@ -15,15 +15,8 @@
       <h1 class="header__h1">Filthy John's Beat and Soundtrack Emporium</h1>
     </header>
     <section id="sidebar" class="w-{calc(2/7)%} h-1/1">
-      <button
-              type="button" class="btn btn-primary"
-              data-bs-toggle="collapse" data-bs-target="#addSongForm"
-              aria-expanded="false" aria-controls="addSongForm">
-        Add Song
-      </button>
-      
-      <div class="collapse" id="form__add-song"> <!--Collapse är en bootstrap klass -->
-        <div class="card card-body">
+      <!-- <section class="" id="addSongForm"> --> <!--Collapse är en bootstrap klass -->
+        <form id="form" class="">
           <div id="form__add-name">
             <label for="add-name" class="form-label">Song name</label>
             <input type="email" class="form-control mb-3" id="add-name" placeholder="name@example.com">
@@ -48,8 +41,8 @@
             <label for="add-length" class="form-label">Song length (Optional)</label>
             <input type="email" class="form-control mb-3" id="add-length" placeholder="name@example.com">
           </div>
-        </div>
-      </div>
+        </form>
+      <!-- </section> -->
     </section>
     <section id="content" class="w-{calc(4/7)} h-auto">
 
@@ -59,12 +52,23 @@
     </section>
     <footer id="footer">
       <div>
-        <h3>Om oss</h3>
+        <h3 class="pt-2">Om oss</h3>
           <p>Vi är 3 studenter på Högskolan Dalarna och det här är vårt projekt för kursen GIK2F8 Dynamiska webbapplikationer där vi skapade en musikapp.</p>
           <p>Appen ska kunna skapa spellistor med låtar, radera spellistor, hämta spellistor och kunna uppdatera dem som extra uppgift (CRUD).</p>
-        <h3>Kontakt</h3>
-          <h4>Markus-----Tim-----Simon</h4>
-          <p>Kontakta oss med mail: <a href="mailto: h21mnygr@du.se">Markus</a><a href="mailto: h21@du.se"> Tim</a><a href="mailto: h21@du.se"> Simon</a></p> 
+        <h3 class="mt-3">Kontakt</h3>
+        <ul class="flex flex-column items-center pt-2 pb-4">
+          <div class="flex items-center space-x-6">
+            <li>
+              <h4><a href="mailto: h21mnygr@du.se">Markus</a></h4>
+            </li>
+            <li>
+              <h4><a href="mailto: h21@du.se"> Tim</a></h4>
+            </li>
+            <li>
+              <h4><a href="mailto: h21@du.se"> Simon</a></h4>
+            </li>
+          </div>
+        </ul>
       </div>
     </footer>
   </body>
