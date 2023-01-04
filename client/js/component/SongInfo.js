@@ -14,7 +14,7 @@ const SongInfo = (song) => {
             artists += ", ";
         }
 
-        if (song.artists.indexOf(artist) == 2) {
+        if (song.artists.indexOf(artist) === 2) {
             artists += ", ...";
         }
     });

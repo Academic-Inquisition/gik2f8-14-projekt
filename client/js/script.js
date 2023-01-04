@@ -1,3 +1,5 @@
+const api = new Api("http://localhost:5000/tasks");
+
 let songNameValid = false;
 let yearValid = false;
 let artistsValid = false;
@@ -12,7 +14,7 @@ const artists = form.addArtists
 const albumName = form.addAlbumName
 const albumArt = form.addAlbumArt
 const songLength = form.addLength
-//const api = new Api("http://localhost:5000/tasks");
+
 const playlist = document.getElementById('playlist');
 
 form.addEventListener('submit', onSubmit);
@@ -74,7 +76,12 @@ function validateField(field) {
             break;
         }
         case 'addAlbumArt': {
-            albumArtValid = true;
+            if (!validateURL(value.toString())) {
+                albumArtValid = false
+                validationMessage = "Fältet innehåller inte en valid internet adress"
+            } else {
+                albumArtValid = true
+            }
             break;
         }
         case 'addLength': {
@@ -131,7 +138,7 @@ function onSubmit(e) {
     }
 }
 
-function saveSong() {
+function saveSong(playlist_id) {
     const song = {
         songName: form.addName.value,
         releaseYear: form.addYear.value,
@@ -141,7 +148,7 @@ function saveSong() {
         songLength: form.addLength.value
     };
     
-    api.create(song).then((song) => { if (song) renderPlayList() });
+    api.addSongToPlaylist(playlist_id, song).then((song) => { if (song) renderPlayList() });
     
     songName.value = '';
     year.value = '';
@@ -156,8 +163,15 @@ function saveSong() {
     albumNameValid = false;
 }
 
-function renderPlayList() {
-    api.getAll().then(songs => {
+function renderPlayList(playlist_id) {
+    if (playlist_id == null) {
+        api.getAllPlaylists().then(playlists => {
+            if (playlists) {
+                playlist.innerText = playlists;
+            }
+        })
+    }
+    api.getPlaylistByID(playlist_id).then(songs => {
         playlist.innerHTML = '';
         if (songs && songs.length > 0) {
             playlist.insertAdjacentHTML('beforeend', PlayList(songs));
