@@ -1,4 +1,4 @@
-/* const PlayList = (songs) => {
+const PlayList = (songs) => {
     let html = `<table id ="playlist" class="border border-separate border-spacing-y-2 border-spacing-2">
                     <tr class="">
                         <th class="pr-4">#</th>
@@ -15,4 +15,4 @@
     html += `</table>`;
 
     return html;
-}; */
+};
