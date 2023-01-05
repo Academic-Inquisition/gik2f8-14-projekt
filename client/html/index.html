@@ -17,13 +17,13 @@
       </header>
       <section class="flex gap-10 mx-2 xl:mx-auto bg-white bg-opacity-75 p-5 rounded-lg">
         <section id="sidebar" class="w-2/6">
-            <h2 class="mb-6 text-3xl text-indigo-900">Lägg till låt</h2>
+            <h2 class="mb-6 text-3xl text-indigo-900 pl-1">Lägg till låt</h2>
             <form id="form" class="">
               <div id="form__add-name">
                 
                 <div class="flex">
-                  <label for="addName" class="form-label">Song name</label>
-                  <p id="songError" class="message pt-0.5 pl-2 text-sm text-red-700 hidden">
+                  <label for="addName" class="form-label pl-2">Song name</label>
+                  <p id="songError" class="message pt-0.5 pl-1 text-sm text-red-700 hidden">
                     Error message
                   </p>
                 </div>
@@ -31,16 +31,16 @@
               </div>
               <div id="form__add-year">
                 <div class="flex">
-                  <label for="addYear" class="form-label">Release year</label>
-                  <p id="yearError" class="message pt-0.5 pl-2 text-sm text-red-700 hidden">
+                  <label for="addYear" class="form-label pl-1">Release year</label>
+                  <p id="yearError" class="message pt-0.5 pl-1 text-sm text-red-700 hidden">
                     Error message
                   </p>
                 </div>
-                <input name="addYear" type="text" class="form-control mb-4" id="addYear" placeholder="Release year">
+                <input name="addYear" type="text" class="form-control mb-4 pl-2" id="addYear" placeholder="Release year">
               </div>
               <div id="form__add-artists">
                 <div class="flex">
-                  <label for="addArtists" class="form-label">Artists</label>
+                  <label for="addArtists" class="form-label pl-1">Artists</label>
                   <p id="artistsError" class="message pt-0.5 pl-2 text-sm text-red-700 hidden">
                     Error message
                   </p>
@@ -49,7 +49,7 @@
               </div>
               <div id="form__add-albumname">
                 <div class="flex">
-                  <label for="addAlbumName" class="form-label">Album name</label>
+                  <label for="addAlbumName" class="form-label pl-1">Album name</label>
                   <p id="albumError" class="message pt-0.5 pl-2 text-sm text-red-700 hidden">
                     Error message
                   </p>
@@ -58,7 +58,7 @@
               </div>
               <div id="form__add-albumart">
                 <div class="flex">
-                  <label for="addAlbumArt" class="form-label">Album art (Optional)</label>
+                  <label for="addAlbumArt" class="form-label pl-1">Album art (Optional)</label>
                   <p id="artError" class="message pt-0.5 pl-2 text-sm text-red-700 hidden">
                     Error message
                   </p>
@@ -67,18 +67,18 @@
               </div>
               <div id="form__add-length">
                 <div class="flex">
-                  <label for="addLength" class="form-label">Song length</label>
+                  <label for="addLength" class="form-label pl-1">Song length</label>
                   <p id="lengthError" class="message pt-0.5 pl-2 text-sm text-red-700 hidden">
                     Error message
                   </p>
                 </div>
                 <input name="addLength" type="text" class="form-control mb-4" id="addLength" placeholder="Length (mm:ss)">
               </div>
-              <button name="submit" type="submit" class="rounded-md bg-blue-300 hover:bg-blue-400 px-4 py-1">Spara</button>
+              <button name="submit" type="submit" class="rounded-md bg-purple-300 hover:bg-purple-400 px-4 py-1">Spara</button>
             </form>
         </section>
         <section id="content" class="w-3/6">
-          <h2 class="mb-6 text-3xl text-indigo-900">Aktuell Spellista</h2>
+          <h2 class="mb-6 text-3xl text-indigo-900 pl-2 pt-2">Aktuell Spellista</h2>
           <table id ="playlist" class="border border-separate border-spacing-y-2 border-spacing-2">
             <!-- STUB -->
           </table>
