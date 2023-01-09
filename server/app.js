@@ -12,19 +12,16 @@ app.use(express.json()).use(express.urlencoded({extended: false})).use((req, res
     });
 
 /**
- *
+ * Method: PUT
+ * Comment: Adds a new playlist to the backend.
  */
-app.put('/playlist/', async (req, res) => {
+app.put('/tasks/playlist/', async (req, res) => {
     try {
         const listBuffer = await fs.readFile('./data/playlists.json');
         const currentPlaylists = JSON.parse(listBuffer);
-        let maxTaskId = 1;
+        let maxTaskId = 0;
         if (currentPlaylists && currentPlaylists.length > 0) {
-            maxTaskId = currentPlaylists.reduce(
-                (maxId, currentElement) =>
-                    currentElement.id > maxId ? currentElement.id : maxId,
-                maxTaskId
-            );
+            maxTaskId = currentPlaylists.length
         }
         const newId = {id: maxTaskId + 1, ...task};
         const newPlaylist = currentPlaylists ? [...currentPlaylists, newId] : [newId];
@@ -36,9 +33,10 @@ app.put('/playlist/', async (req, res) => {
 });
 
 /**
- *
+ * Method: GET
+ * Comment: Gets the list of all playlists from the backend.
  */
-app.get('/playlist/', async (req, res) => {
+app.get('/tasks/playlist/', async (req, res) => {
     try {
         const buffer = await fs.readFile('./data/playlists.json');
         let list = JSON.parse(buffer);
@@ -49,9 +47,10 @@ app.get('/playlist/', async (req, res) => {
 });
 
 /**
- *
+ * Method: GET
+ * Comment: Gets a specific playlist from the backend.
  */
-app.get('/playlist/:id', async (req, res) => {
+app.get('/tasks/playlist/:id', async (req, res) => {
     try {
         const buffer = await fs.readFile('./data/playlists.json');
         let list = JSON.parse(buffer);
@@ -64,9 +63,10 @@ app.get('/playlist/:id', async (req, res) => {
 });
 
 /**
- *
+ * Method: DELETE
+ * Comment: Removes a specific playlist from the backend.
  */
-app.delete('/playlist/:id', async (req, res) => {
+app.delete('/tasks/playlist/:id', async (req, res) => {
     try {
         const body = req.body
         const id = req.params.id;
@@ -86,19 +86,27 @@ app.delete('/playlist/:id', async (req, res) => {
 });
 
 /**
- *
+ * Method: PUT
+ * Comment: Adds a song to the playlist
  */
-app.put('/playlist/song', async (req, res) => {
+app.put('/tasks/playlist/song/', async (req, res) => {
     try {
         const body = req.body
         const buffer = await fs.readFile('./data/playlists.json');
         let list = JSON.parse(buffer);
-        if (body.id && list && list.length > 0) {
-            const buf = await fs.readFile('./data/' + list[body.id] + ".json")
+        if (list && list.length > 0) {
+            const buf = await fs.readFile('./data/playlist/' + list[body.id])
             let playlist = JSON.parse(buf)
+            let maxSongId = 0;
+            if (playlist["songs"] && playlist["songs"].length > 0) {
+                maxSongId = playlist["songs"].length
+            }
             if (playlist) {
-                let songs = playlist.songs
-                songs.append(body.song)
+                let id = body.id
+                body.id = maxSongId
+                playlist["songs"].push(body)
+                await fs.writeFile('./data/playlist/' + list[id], JSON.stringify(playlist, null, 2));
+                res.send({message: `Låten med namnet ${body.songName} lades till`, dat: playlist})
             }
         }
     } catch (error) {
@@ -107,9 +115,10 @@ app.put('/playlist/song', async (req, res) => {
 });
 
 /**
- *
+ * Method: PATCH
+ * Comment: Updates a specific song from the playlist in the backend.
  */
-app.patch('/playlist/song', async (req, res) => {
+app.patch('/tasks/playlist/song/', async (req, res) => {
     try {
         const body = req.body
         const buffer = await fs.readFile('./data/playlists.json');
@@ -119,8 +128,13 @@ app.patch('/playlist/song', async (req, res) => {
             let playlist = JSON.parse(buf)
             if (playlist) {
                 let songs = playlist.songs
+                for (let i = 0; i < playlist.length; i++) {
+                    if (songs[i].id == body.song_id) {
+                        songs[i] = body.song
+                        break
+                    }
+                }
                 let position = playlist.indexOf(body.song)
-                songs[position] = body.song
             }
         }
     } catch (error) {
@@ -129,9 +143,10 @@ app.patch('/playlist/song', async (req, res) => {
 });
 
 /**
- *
+ * Method: DELETE
+ * Comment: Removes a specific song from the playlist in the backend.
  */
-app.delete('/playlist/song', async (req, res) => {
+app.delete('/tasks/playlist/song/', async (req, res) => {
     try {
         const body = req.body;
         const buffer = await fs.readFile('./data/playlists.json');

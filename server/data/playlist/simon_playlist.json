@@ -1,0 +1,31 @@
+{
+  "id": 0,
+  "playListName": "Simon's Kickin' Playlist",
+  "authors": [
+    "Simon Stålnäbb",
+    "Tim Stolpe",
+    "Marcus Nygren"
+  ],
+  "songs": [
+    {
+      "id": 0,
+      "songName": "The Sign",
+      "releaseYear": "2022",
+      "artists": [
+        "Lizzo"
+      ],
+      "albumName": "Special",
+      "albumArt": "https://media.pitchfork.com/photos/62589c810a03dbdd163a4431/1:1/w_600/lizzo-special.jpg",
+      "songLength": "2:45"
+    },
+    {
+      "id": 1,
+      "songName": "To Hell and Back",
+      "releaseYear": "2014",
+      "artists": "Sabaton",
+      "albumName": "Heroes",
+      "albumArt": "https://upload.wikimedia.org/wikipedia/en/f/f9/Sabaton_Alblem_cover.jpg",
+      "songLength": "3:26"
+    }
+  ]
+}

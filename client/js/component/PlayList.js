@@ -1,4 +1,5 @@
-const PlayList = (songs) => {
+const PlayList = (result) => {
+    // TODO:
     let html = `<table id ="playlist" class="border border-separate border-spacing-y-2 border-spacing-2">
                     <tr class="">
                         <th class="pr-4">#</th>
@@ -8,7 +9,7 @@ const PlayList = (songs) => {
                         <th>Längd</th>
                     </tr>`;
 
-    songs.forEach(song => {
+    result.songs.forEach(song => {
         html += SongInfo(song);
     })
 

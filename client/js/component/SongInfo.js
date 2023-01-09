@@ -1,21 +1,21 @@
 const SongInfo = (song) => {
-    let artists = "";
+    let artistString = ""
+    let artists = [song.artists];
     let image = song.albumArt;          // Grabs the coverImage string
     if (!image) {                         // If it doesn't exist then replace it with the wikimedia "No-Image-Placeholder.svg".
         image = "https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg";
     }
-
-    song.artists.forEach(artist => {
-        if (!(song.artists.indexOf(artist) > 2)){
-            artists += artist;
+    artists.forEach(artist => {
+        if (!(artists.indexOf(artist) > 2)){
+            artistString += artist;
         }
 
-        if (song.artists.indexOf(artist) < song.artists.length - 1 && !(song.artists.indexOf(artist) > 1)) {
-            artists += ", ";
+        if (artists.indexOf(artist) < artists.length - 1 && !(artists.indexOf(artist) > 1)) {
+            artistString += ", ";
         }
 
-        if (song.artists.indexOf(artist) === 2) {
-            artists += ", ...";
+        if (artists.indexOf(artist) === 2) {
+            artistString += ", ...";
         }
     });
 

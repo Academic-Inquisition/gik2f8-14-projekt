@@ -138,29 +138,29 @@ function onSubmit(e) {
     }
 }
 
-function saveSong(playlist_id) {
+function saveSong() {
     const song = {
         songName: form.addName.value,
         releaseYear: form.addYear.value,
         artists: form.addArtists.value,
-        albumName: form.addAlbumArt.value,
-        albumArt: "https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg",
+        albumName: form.addAlbumName.value,
+        albumArt: form.addAlbumArt.value,
         songLength: form.addLength.value
     };
     
-    api.addSongToPlaylist(playlist_id, song).then((song) => { if (song) renderPlayList() });
+    api.addSongToPlaylist(0, song).then((song) => { if (song) renderPlayList(0) });
     
-    songName.value = '';
-    year.value = '';
-    artists.value = '';
-    albumName.value = '';
-    albumArt.value = '';
-    songLength.value = '';
+    //songName.value = '';
+    //year.value = '';
+    //artists.value = '';
+    //albumName.value = '';
+    //albumArt.value = '';
+    //songLength.value = '';
 
-    songNameValid = false;
-    yearValid = false;
-    artistsValid = false;
-    albumNameValid = false;
+    //songNameValid = false;
+    //yearValid = false;
+    //artistsValid = false;
+    //albumNameValid = false;
 }
 
 function renderPlayList(playlist_id) {
@@ -171,10 +171,13 @@ function renderPlayList(playlist_id) {
             }
         })
     }
-    api.getPlaylistByID(playlist_id).then(songs => {
+    api.getPlaylistByID(playlist_id).then(result => {
         playlist.innerHTML = '';
-        if (songs && songs.length > 0) {
-            playlist.insertAdjacentHTML('beforeend', PlayList(songs));
+        // README: Resultatet vi får tbx är spellistan i format av vår JSON-Schema.
+        // Plocka ut informationen ni behöver ifrån den!
+        console.log(result)
+        if (result) {
+            playlist.insertAdjacentHTML('beforeend', PlayList(result));
         }
     });
 }
@@ -232,4 +235,4 @@ const songs = [
 ]
 
 
-renderPlayList();
+renderPlayList(0);
