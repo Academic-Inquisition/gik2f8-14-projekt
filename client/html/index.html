@@ -17,10 +17,9 @@
       </header>
       <section class="flex gap-10 mx-2 xl:mx-auto bg-white bg-opacity-75 p-5 rounded-lg">
         <section id="sidebar" class="w-2/6">
-            <h2 class="mb-6 text-3xl text-indigo-900 pl-1">Lägg till låt</h2>
-            <form id="form" class="">
+            <h2 id="sidebar__header" class="mb-6 text-3xl text-indigo-900 pl-1">Lägg till spellista</h2>
+            <form id="form" class="hidden">
               <div id="form__add-name">
-                
                 <div class="flex">
                   <label for="addName" class="form-label pl-2">Song name</label>
                   <p id="songError" class="message pt-0.5 pl-1 text-sm text-red-700 hidden">
@@ -74,12 +73,20 @@
                 </div>
                 <input name="addLength" type="text" class="form-control mb-4" id="addLength" placeholder="Length (mm:ss)">
               </div>
-              <button name="submit" type="submit" class="rounded-md bg-purple-300 hover:bg-purple-400 px-4 py-1">Spara</button>
+              <div class="flex">
+                <button name="submit" type="submit" class="rounded-md bg-blue-300 hover:bg-blue-400 px-4 py-1">Spara</button>
+                <p id="playListError" class="message pt-0.5 pl-4 pt-1 text-sm text-red-700 hidden">
+                  Error message
+                </p>
+              </div>
             </form>
         </section>
         <section id="content" class="w-3/6">
-          <h2 class="mb-6 text-3xl text-indigo-900 pl-2 pt-2">Aktuell Spellista</h2>
-          <table id ="playlist" class="border border-separate border-spacing-y-2 border-spacing-2">
+          <div class="flex-1 gap-8">
+            <h2 id="content__header" class="mb-4 text-3xl text-indigo-900 pl-2 pt-2 inline">Aktuell Spellista</h2>
+            <button id="toggleSelect" class="rounded-md bg-blue-300 hover:bg-blue-400 px-2 py-2 ml-16 hidden" onclick="renderSelection()">Välj ny spellista</button>
+          </div>
+          <table id ="playlist" class="border border-separate border-spacing-y-2 border-spacing-2 mt-4">
             <!-- STUB -->
           </table>
         </section>
@@ -102,6 +109,9 @@
         </ul>
       </div>
     </footer>
+    <script src="../js/component/AddSong.js"></script>
+    <script src="../js/component/AddPlayList.js"></script>
+    <script src="../js/component/PlaylistSelect.js"></script>
     <script src="../js/component/SongInfo.js"></script>
     <script src="../js/component/PlayList.js"></script>
     <script src="../js/Api.js"></script>

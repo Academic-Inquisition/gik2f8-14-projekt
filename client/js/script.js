@@ -7,13 +7,15 @@ let albumNameValid = false;
 let albumArtValid = true;
 let songLengthValid = true;
 
+let selectedPlaylist = -1;
+
 const form = document.getElementById('form')
 const songName = form.addName;
 const year = form.addYear;
-const artists = form.addArtists
-const albumName = form.addAlbumName
-const albumArt = form.addAlbumArt
-const songLength = form.addLength
+const artists = form.addArtists;
+const albumName = form.addAlbumName;
+const albumArt = form.addAlbumArt;
+const songLength = form.addLength;
 
 const playlist = document.getElementById('playlist');
 
@@ -76,9 +78,9 @@ function validateField(field) {
             break;
         }
         case 'addAlbumArt': {
-            if (!validateURL(value.toString())) {
+            if (!validateURL(value.toString()) && value.length > 0) {
                 albumArtValid = false
-                validationMessage = "Fältet innehåller inte en valid internet adress"
+                validationMessage = "Fältet innehåller inte en giltig internetadress!"
             } else {
                 albumArtValid = true
             }
@@ -109,31 +111,37 @@ function onSubmit(e) {
     e.preventDefault();
     let validationMessage = '';
 
-    if (!songNameValid){
+    if (!songNameValid) {
         validationMessage = "Fältet 'Song name' är obligatoriskt!";
         document.getElementById('songError').innerText = validationMessage;
         document.getElementById('songError').classList.remove('hidden');
     }
 
-    if (!yearValid){
+    if (!yearValid) {
         validationMessage = "Fältet 'Release year' är obligatoriskt!";
         document.getElementById('yearError').innerText = validationMessage;
         document.getElementById('yearError').classList.remove('hidden');
     }
 
-    if (!artistsValid){
+    if (!artistsValid) {
         validationMessage = "Fältet 'Artists' är obligatoriskt!";
         document.getElementById('artistsError').innerText = validationMessage;
         document.getElementById('artistsError').classList.remove('hidden');
     }
 
-    if (!albumNameValid){
+    if (!albumNameValid) {
         validationMessage = "Fältet 'Album name' är obligatoriskt!";
         document.getElementById('albumError').innerText = validationMessage;
         document.getElementById('albumError').classList.remove('hidden');
     }
 
-    if (songNameValid && yearValid && artistsValid && albumNameValid){
+    if (selectedPlaylist === -1) {
+        validationMessage = "Du måste välja en spellista först!";
+        document.getElementById('playListError').innerText = validationMessage;
+        document.getElementById('playListError').classList.remove('hidden');
+    }
+
+    if (songNameValid && yearValid && artistsValid && albumNameValid && selectedPlaylist !== -1){
         saveSong();
     }
 }
@@ -148,7 +156,7 @@ function saveSong() {
         songLength: form.addLength.value
     };
     
-    api.addSongToPlaylist(0, song).then((song) => { if (song) renderPlayList(0) });
+    api.addSongToPlaylist(0, song).then((song) => { if (song) renderPlayList(selectedPlaylist) });
     
     //songName.value = '';
     //year.value = '';
@@ -164,21 +172,58 @@ function saveSong() {
 }
 
 function renderPlayList(playlist_id) {
-    if (playlist_id == null) {
-        api.getAllPlaylists().then(playlists => {
-            if (playlists) {
-                playlist.innerText = playlists;
-            }
-        })
-    }
+    sidebar = document.getElementById('sidebar');
+    toggleButton = document.getElementById('toggleSelect');
+    selection = document.getElementById('content__selection');
+    contentHeader = document.getElementById('content__header');
+    sidebarHeader = document.getElementById('sidebar__header');
+
+    selection.remove();
+    toggleButton.classList.remove('hidden');
+    html = `<button onclick="renderSelection()">Välj ny spellista</button>`;
+    
+    form.classList.remove('hidden');
+    sidebarHeader.innerText = "Lägg till låt";
+    contentHeader.insertAdjacentHTML('beforeend', html);
+    
+
     api.getPlaylistByID(playlist_id).then(result => {
         playlist.innerHTML = '';
+        console.log(result.id);
+        selectedPlaylist = result.id;
+        header.innerText = result.playListName;
         // README: Resultatet vi får tbx är spellistan i format av vår JSON-Schema.
         // Plocka ut informationen ni behöver ifrån den!
-        console.log(result)
         if (result) {
             playlist.insertAdjacentHTML('beforeend', PlayList(result));
         }
+    });
+}
+
+function renderSelection() {
+    content = document.getElementById('content');
+    header = document.getElementById('content__header');
+    sidebarHeader = document.getElementById('sidebar__header');
+    toggleButton = document.getElementById('toggleSelect');
+    selection = document.getElementById('content__selection');
+    
+    selectedPlaylist = -1;
+    playlist.innerHTML = '';
+    header.innerText = "Välj Spellista";
+    sidebarHeader.innerText = "Lägg till spellista";
+
+    form.classList.add('hidden');
+    toggleButton.classList.add('hidden');
+    
+    let html = `<ul id="content__selection">`
+
+    api.getAllPlaylists().then(playlists => {
+            if (playlists) {
+                for (i = 0; i < playlists.length; i++){
+                    html += PlaylistSelect(playlists[i], i);
+                }
+                content.insertAdjacentHTML('beforeend', html);
+            }
     });
 }
 
@@ -234,5 +279,4 @@ const songs = [
     }
 ]
 
-
-renderPlayList(0);
+renderSelection();
