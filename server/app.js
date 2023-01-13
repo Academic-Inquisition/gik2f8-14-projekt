@@ -17,15 +17,20 @@ app.use(express.json()).use(express.urlencoded({extended: false})).use((req, res
  */
 app.put('/tasks/playlist/', async (req, res) => {
     try {
+        let body = req.body;
         const listBuffer = await fs.readFile('./data/playlists.json');
         const currentPlaylists = JSON.parse(listBuffer);
-        let maxTaskId = 0;
+        let maxListId = 0;
         if (currentPlaylists && currentPlaylists.length > 0) {
-            maxTaskId = currentPlaylists.length
+            maxListId = currentPlaylists.reduce(
+                (maxId, current) => current.id > maxId ? current.id : maxId, maxListId
+            );
         }
-        const newId = {id: maxTaskId + 1, ...task};
-        const newPlaylist = currentPlaylists ? [...currentPlaylists, newId] : [newId];
+        const newId = [body.playListName];
+        const newPlaylist = currentPlaylists ? [...currentPlaylists, body.playListName] : [newId];
+        const plData = body ? {id: maxListId, ...body} : [body];
         await fs.writeFile('./data/playlists.json', JSON.stringify(newPlaylist));
+        await fs.writeFile(`./data/playlist/${body.playListName}.json`, JSON.stringify(plData))
         res.send(newPlaylist);
     } catch (error) {
         res.status(500).send({error: error.stack});
@@ -99,11 +104,13 @@ app.put('/tasks/playlist/song/', async (req, res) => {
             let playlist = JSON.parse(buf)
             let maxSongId = 0;
             if (playlist["songs"] && playlist["songs"].length > 0) {
-                maxSongId = playlist["songs"].length
+                maxSongId = playlist.reduce(
+                    (maxId, current) => current.id > maxId ? current.id : maxId, maxSongId
+                )
             }
             if (playlist) {
                 let id = body.id
-                body.id = maxSongId
+                body.id = maxSongId + 1
                 playlist["songs"].push(body)
                 await fs.writeFile('./data/playlist/' + list[id], JSON.stringify(playlist, null, 2));
                 res.send({message: `Låten med namnet ${body.songName} lades till`, dat: playlist})
