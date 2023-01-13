@@ -7,9 +7,9 @@ let albumNameValid = false;
 let albumArtValid = true;
 let songLengthValid = true;
 
-let playlistNameValid = false;
-let playlistFileNameValid = false;
-let playlistAuthorsValid = false;
+let playlistNameValid = true;
+let playlistFileNameValid = true;
+let playlistAuthorsValid = true;
 
 let selectedPlaylist = -1;
 let submitType = "playlist";
@@ -46,6 +46,8 @@ albumName.addEventListener('blur', (e) => validateField(e.target));
 albumName.addEventListener('input', (e) => validateField(e.target));
 songLength.addEventListener('blur', (e) => validateField(e.target));
 songLength.addEventListener('input', (e) => validateField(e.target));
+
+playlistForm.addEventListener('submit', onSubmit);
 
 function validateField(field) {
     const {name, value} = field;
@@ -114,7 +116,7 @@ function validateField(field) {
             }
             break;
         }
-        case 'addPlaylistName': {
+        /* case 'addPlaylistName': {
             if (value.length === 0){
                 playlistNameValid = false;
                 validationMessage = "Fältet 'Playlist name' är obligatoriskt!";
@@ -143,7 +145,7 @@ function validateField(field) {
                 playlistAuthorsValid = true;
             }
             break;
-        } 
+        }  */
     }
 
     const errorMessage = field.previousElementSibling.children[1];
@@ -210,7 +212,7 @@ function onSubmit(e) {
             document.getElementById('authorsError').classList.remove('hidden');
         }
 
-        if (songNamplaylistNameValideValid && playlistFileNameValid && playlistAuthorsValid){
+        if (playlistNameValid && playlistFileNameValid && playlistAuthorsValid){
             savePlaylist();
         }
     }
@@ -245,7 +247,8 @@ function saveSong() {
 function savePlaylist() {
     const playlistData = {
         playListName: playlistForm.addPlaylistName.value,
-        authors: playlistForm.addAuthors.value
+        authors: [playlistForm.addAuthors.value],
+        songs: []
     };
 
     console.log(playlistData);

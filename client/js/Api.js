@@ -18,7 +18,7 @@ class Api {
      * @param {string} data
      */
     createPlayList(data) {
-        const json = JSON.stringify(data)
+        const json = JSON.stringify(data, null, 2)
         console.log(`Sending request for "Playlist" creation with name: ${data.playlistName}`)
         const request = new Request(this.playListURL, {
             method: 'PUT',
