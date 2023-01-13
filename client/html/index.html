@@ -18,17 +18,17 @@
       <section class="flex gap-10 mx-2 xl:mx-auto bg-white bg-opacity-75 p-5 rounded-lg">
         <section id="sidebar" class="w-2/6">
             <h2 id="sidebar__header" class="mb-6 text-3xl text-indigo-900 pl-1">Lägg till spellista</h2>
-            <form id="form" class="hidden">
-              <div id="form__add-name">
+            <form id="songForm" class="hidden">
+              <div id="songForm__add-name">
                 <div class="flex">
-                  <label for="addName" class="form-label pl-2">Song name</label>
+                  <label for="addName" class="form-label pl-1">Song name</label>
                   <p id="songError" class="message pt-0.5 pl-1 text-sm text-red-700 hidden">
                     Error message
                   </p>
                 </div>
                 <input name="addName" type="text" class="form-control mb-4" id="addName" placeholder="Song name">
               </div>
-              <div id="form__add-year">
+              <div id="songForm__add-year">
                 <div class="flex">
                   <label for="addYear" class="form-label pl-1">Release year</label>
                   <p id="yearError" class="message pt-0.5 pl-1 text-sm text-red-700 hidden">
@@ -37,7 +37,7 @@
                 </div>
                 <input name="addYear" type="text" class="form-control mb-4 pl-2" id="addYear" placeholder="Release year">
               </div>
-              <div id="form__add-artists">
+              <div id="songForm__add-artists">
                 <div class="flex">
                   <label for="addArtists" class="form-label pl-1">Artists</label>
                   <p id="artistsError" class="message pt-0.5 pl-2 text-sm text-red-700 hidden">
@@ -46,7 +46,7 @@
                 </div>
                 <textarea name="addArtists" class="form-control mb-4" id="addArtists" rows="5"></textarea>
               </div>
-              <div id="form__add-albumname">
+              <div id="songForm__add-albumname">
                 <div class="flex">
                   <label for="addAlbumName" class="form-label pl-1">Album name</label>
                   <p id="albumError" class="message pt-0.5 pl-2 text-sm text-red-700 hidden">
@@ -55,7 +55,7 @@
                 </div>
                 <input name="addAlbumName" type="text" class="form-control mb-4" id="addAlbumName" placeholder="Album name">
               </div>
-              <div id="form__add-albumart">
+              <div id="songForm__add-albumart">
                 <div class="flex">
                   <label for="addAlbumArt" class="form-label pl-1">Album art (Optional)</label>
                   <p id="artError" class="message pt-0.5 pl-2 text-sm text-red-700 hidden">
@@ -64,7 +64,7 @@
                 </div>
                 <input name="addAlbumArt" type="text" class="form-control mb-4" id="addAlbumArt" placeholder="Link to album art">
               </div>
-              <div id="form__add-length">
+              <div id="songForm__add-length">
                 <div class="flex">
                   <label for="addLength" class="form-label pl-1">Song length</label>
                   <p id="lengthError" class="message pt-0.5 pl-2 text-sm text-red-700 hidden">
@@ -74,11 +74,41 @@
                 <input name="addLength" type="text" class="form-control mb-4" id="addLength" placeholder="Length (mm:ss)">
               </div>
               <div class="flex">
-                <button name="submit" type="submit" class="rounded-md bg-blue-300 hover:bg-blue-400 px-4 py-1">Spara</button>
+                <button name="submitSong" type="submit" class="rounded-md bg-blue-300 hover:bg-blue-400 px-4 py-1">Spara</button>
                 <p id="playListError" class="message pt-0.5 pl-4 pt-1 text-sm text-red-700 hidden">
                   Error message
                 </p>
               </div>
+            </form>
+            <form id="playlistForm" class="">
+              <div id="playlistForm__add-name">
+                <div class="flex">
+                  <label for="addPlaylistName" class="form-label pl-1">Playlist name</label>
+                  <p id="playlistNameError" class="message pt-0.5 pl-1 text-sm text-red-700 hidden">
+                    Error message
+                  </p>
+                </div>
+                <input name="addPlaylistName" type="text" class="form-control mb-4" id="" placeholder="Playlist name">
+              </div>
+              <div id="playlistForm__add-filename">
+                <div class="flex">
+                  <label for="addFileName" class="form-label pl-1">File name</label>
+                  <p id="filenameError" class="message pt-0.5 pl-1 text-sm text-red-700 hidden">
+                    Error message
+                  </p>
+                </div>
+                <input name="addFileName" type="text" class="form-control mb-4 pl-2" id="" placeholder="my_playlist.json">
+              </div>
+              <div id="playlistForm__add-authors">
+                <div class="flex">
+                  <label for="addAuthors" class="form-label pl-1">Author(s)</label>
+                  <p id="authorsError" class="message pt-0.5 pl-2 text-sm text-red-700 hidden">
+                    Error message
+                  </p>
+                </div>
+                <textarea name="addAuthors" class="form-control mb-4" id="" rows="5"></textarea>
+              </div>
+              <button name="submitPlaylist" type="submit" class="rounded-md bg-blue-300 hover:bg-blue-400 px-4 py-1">Spara</button>
             </form>
         </section>
         <section id="content" class="w-3/6">
@@ -102,9 +132,9 @@
         <h3 class="mt-6">Kontakt</h3>
         <ul class="flex flex-column items-center pt-2 pb-4">
           <div class="flex items-center space-x-6">
-            <li><h4><a class="" href="mailto: h21mnygr@du.se">Markus</a></h4></li>
-            <li> <h4><a class="" href="mailto: h21tisto@du.se">Tim</a></h4></li>
-            <li><h4><a class="" href="mailto: h21simos@du.se">Simon</a></h4></li>
+            <li><h4><a class="footer__link" href="mailto: h21mnygr@du.se">Markus</a></h4></li>
+            <li><h4><a class="footer__link" href="mailto: h21tisto@du.se">Tim</a></h4></li>
+            <li><h4><a class="footer__link" href="mailto: h21simos@du.se">Simon</a></h4></li>
           </div>
         </ul>
       </div>

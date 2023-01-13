@@ -3,7 +3,11 @@
 /*Alla header styles*/
 body {
     margin: 0 auto;
-    
+    min-height: 100%;
+}
+
+main {
+    min-height: 100%;
 }
 
 #header__text{
@@ -61,4 +65,10 @@ body {
     font-weight: 600;
     font-size: 1.2rem;
     font-family: serif;
+}
+
+.footer__link:visited, 
+.footer__link:hover, 
+.footer__link:active {
+    text-decoration: none;
 }
