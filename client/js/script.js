@@ -7,9 +7,8 @@ let albumNameValid = false;
 let albumArtValid = true;
 let songLengthValid = true;
 
-let playlistNameValid = true;
-let playlistFileNameValid = true;
-let playlistAuthorsValid = true;
+let playlistNameValid = false;
+let playlistAuthorsValid = false;
 
 let selectedPlaylist = -1;
 let submitType = "playlist";
@@ -24,7 +23,6 @@ const songLength = songForm.addLength;
 
 const playlistForm = document.getElementById('playlistForm');
 const playlistName = playlistForm.addPlaylistName;
-const playlistFileName = playlistForm.addFileName;
 const playlistAuthors = playlistForm.addAuthors;
 
 const sidebar = document.getElementById('sidebar');
@@ -48,6 +46,10 @@ songLength.addEventListener('blur', (e) => validateField(e.target));
 songLength.addEventListener('input', (e) => validateField(e.target));
 
 playlistForm.addEventListener('submit', onSubmit);
+playlistName.addEventListener('blur', (e) => validateField(e.target));
+playlistName.addEventListener('input', (e) => validateField(e.target));
+playlistAuthors.addEventListener('blur', (e) => validateField(e.target));
+playlistAuthors.addEventListener('input', (e) => validateField(e.target));
 
 function validateField(field) {
     const {name, value} = field;
@@ -116,7 +118,7 @@ function validateField(field) {
             }
             break;
         }
-        /* case 'addPlaylistName': {
+        case 'addPlaylistName': {
             if (value.length === 0){
                 playlistNameValid = false;
                 validationMessage = "Fältet 'Playlist name' är obligatoriskt!";
@@ -125,17 +127,7 @@ function validateField(field) {
                 playlistNameValid = true;
             }
             break;
-        }   
-        case 'addFileName': {
-            if (value.length === 0){
-                playlistFileNameValid = false;
-                validationMessage = "Fältet 'File name' är obligatoriskt!";
-            }
-            else {
-                playlistFileNameValid = true;
-            }
-            break;
-        }
+        } 
         case 'addAuthors': {
             if (value.length === 0){
                 playlistAuthorsValid = false;
@@ -145,7 +137,7 @@ function validateField(field) {
                 playlistAuthorsValid = true;
             }
             break;
-        }  */
+        } 
     }
 
     const errorMessage = field.previousElementSibling.children[1];
@@ -200,19 +192,13 @@ function onSubmit(e) {
             document.getElementById('playlistNameError').classList.remove('hidden');
         }
     
-        if (!playlistFileNameValid) {
-            validationMessage = "Fältet 'File name' är obligatoriskt!";
-            document.getElementById('filenameError').innerText = validationMessage;
-            document.getElementById('filenameError').classList.remove('hidden');
-        }
-    
         if (!playlistAuthorsValid) {
             validationMessage = "Fältet 'Authors' är obligatoriskt!";
             document.getElementById('authorsError').innerText = validationMessage;
             document.getElementById('authorsError').classList.remove('hidden');
         }
 
-        if (playlistNameValid && playlistFileNameValid && playlistAuthorsValid){
+        if (playlistNameValid && playlistAuthorsValid){
             savePlaylist();
         }
     }
@@ -251,15 +237,15 @@ function savePlaylist() {
         songs: []
     };
 
-    console.log(playlistData);
     api.createPlayList(playlistData).then((playlist) => { if (playlist) renderSelection(); });
 }
 
 function renderPlayList(playlist_id) {
-    submitType = "song";
     const selection = document.getElementById('content__selection');
-    
     selection.remove();
+
+    submitType = "song";
+    
     toggleButton.classList.remove('hidden');
     html = `<button onclick="renderSelection()">Välj ny spellista</button>`;
     
@@ -271,7 +257,6 @@ function renderPlayList(playlist_id) {
 
     api.getPlaylistByID(playlist_id).then(result => {
         playlist.innerHTML = '';
-        console.log(result.id);
         selectedPlaylist = result.id;
         contentHeader.innerText = result.playListName;
         // README: Resultatet vi får tbx är spellistan i format av vår JSON-Schema.
