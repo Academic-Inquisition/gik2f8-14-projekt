@@ -46,7 +46,7 @@ class Api {
      * @param {int} playlist_id
      */
     getPlaylistByID(playlist_id) {
-        console.log(this.playListURL + playlist_id.toString())
+        console.log(this.playListURL + playlist_id)
         return fetch(this.playListURL + playlist_id.toString(), {method: 'GET'})
             .then((result) => result.json()).then((data) => data)
             .catch((e) => console.log(e))

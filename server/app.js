@@ -1,6 +1,8 @@
 const express = require('express');
 const app = express();
 const fs = require('fs/promises');
+const fss = require('fs')
+const path = require("path");
 
 const PORT = 5000;
 
@@ -18,6 +20,10 @@ app.use(express.json()).use(express.urlencoded({extended: false})).use((req, res
 app.put('/tasks/playlist/', async (req, res) => {
     try {
         let body = req.body;
+        if (!fss.existsSync("./data/playlists.json")) {
+            console.log("File './data/playlists.json' not found, creating file")
+            await fs.writeFile('./data/playlists.json', JSON.stringify([]));
+        }
         const listBuffer = await fs.readFile('./data/playlists.json');
         const currentPlaylists = JSON.parse(listBuffer);
         let maxListId = 0;
@@ -26,11 +32,14 @@ app.put('/tasks/playlist/', async (req, res) => {
                 (maxId, current) => current.id > maxId ? current.id : maxId, maxListId
             );
         }
-        const newId = [body.playListName];
-        const newPlaylist = currentPlaylists ? [...currentPlaylists, body.playListName] : [newId];
-        const plData = body ? {id: maxListId, ...body} : [body];
-        await fs.writeFile('./data/playlists.json', JSON.stringify(newPlaylist));
-        await fs.writeFile(`./data/playlist/${body.playListName}.json`, JSON.stringify(plData))
+        const newId = [body.playListName.toLowerCase() + ".json"];
+        const newPlaylist = currentPlaylists ? [...currentPlaylists, body.playListName.toLowerCase() + ".json"] : [newId];
+        const plData = body ? {id: maxListId + 1, ...body} : [body];
+        await fs.writeFile('./data/playlists.json', JSON.stringify(newPlaylist, null, 2));
+        await fss.mkdir(path.join(__dirname, '/data/playlist'), {recursive: true},(err) => {
+            if (err) return console.log(err)
+        })
+        await fs.writeFile(`./data/playlist/${body.playListName.toLowerCase()}.json`, JSON.stringify(plData, null, 2))
         res.send(newPlaylist);
     } catch (error) {
         res.status(500).send({error: error.stack});
@@ -57,9 +66,7 @@ app.get('/tasks/playlist/', async (req, res) => {
  */
 app.get('/tasks/playlist/:id', async (req, res) => {
     try {
-        const buffer = await fs.readFile('./data/playlists.json');
-        let list = JSON.parse(buffer);
-        const file = await fs.readFile('./data/playlist/' + list[req.params.id]);
+        const file = await fs.readFile('./data/playlist/' + req.params.id);
         let playlist = JSON.parse(file);
         res.send(playlist);
     } catch (e) {
@@ -81,6 +88,7 @@ app.delete('/tasks/playlist/:id', async (req, res) => {
             await fs.writeFile('./data/playlists.json',
                 JSON.stringify(currentPlaylists.filter((playlist) => playlist.id != id))
             );
+            await fs.unlink(`./data/playlist/${id}`)
             res.send({message: `Spellistan med namnet ${body.playListName} togs bort`});
         } else {
             res.status(404).send({error: 'Ingen spellista att ta bort'});

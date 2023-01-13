@@ -242,7 +242,6 @@ function savePlaylist() {
 
 function renderPlayList(playlist_id) {
     const selection = document.getElementById('content__selection');
-    selection.remove();
 
     submitType = "song";
     
@@ -277,13 +276,16 @@ function renderSelection() {
     songForm.classList.add('hidden');
     toggleButton.classList.add('hidden');
     playlistForm.classList.remove('hidden');
+
+    const exists = document.getElementById('content__selection');
     
     let html = `<ul id="content__selection">`;
 
     api.getAllPlaylists().then(playlists => {
         if (playlists) {
-            for (i = 0; i < playlists.length; i++){
-                html += PlaylistSelect(playlists[i], i);
+            if (exists) exists.remove()
+            for (let i = 0; i < playlists.length; i++){
+                html += PlaylistSelect(`${playlists[i]}`, i);
             }
             content.insertAdjacentHTML('beforeend', html);
         }
