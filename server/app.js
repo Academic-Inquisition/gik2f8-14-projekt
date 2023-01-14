@@ -66,11 +66,13 @@ app.get('/tasks/playlist/', async (req, res) => {
  */
 app.get('/tasks/playlist/:id', async (req, res) => {
     try {
+        console.log(req.params.id);
         const file = await fs.readFile('./data/playlist/' + req.params.id);
         let playlist = JSON.parse(file);
+        console.log(playlist);
         res.send(playlist);
     } catch (e) {
-        res.status(500).send({e});
+        res.status(500);//.send({e});
     }
 });
 
@@ -104,24 +106,25 @@ app.delete('/tasks/playlist/:id', async (req, res) => {
  */
 app.put('/tasks/playlist/song/', async (req, res) => {
     try {
-        const body = req.body
+        const body = req.body;
+        console.log(body);
         const buffer = await fs.readFile('./data/playlists.json');
         let list = JSON.parse(buffer);
         if (list && list.length > 0) {
-            const buf = await fs.readFile('./data/playlist/' + list[body.id])
-            let playlist = JSON.parse(buf)
+            const buf = await fs.readFile('./data/playlist/' + list[body.id]);
+            let playlist = JSON.parse(buf);
             let maxSongId = 0;
             if (playlist["songs"] && playlist["songs"].length > 0) {
                 maxSongId = playlist.reduce(
                     (maxId, current) => current.id > maxId ? current.id : maxId, maxSongId
-                )
+                );
             }
             if (playlist) {
-                let id = body.id
-                body.id = maxSongId + 1
-                playlist["songs"].push(body)
+                let id = body.id;
+                body.id = maxSongId + 1;
+                playlist["songs"].push(body);
                 await fs.writeFile('./data/playlist/' + list[id], JSON.stringify(playlist, null, 2));
-                res.send({message: `Låten med namnet ${body.songName} lades till`, dat: playlist})
+                res.send({message: `Låten med namnet ${body.songName} lades till`, dat: playlist});
             }
         }
     } catch (error) {

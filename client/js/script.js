@@ -28,6 +28,7 @@ const playlistAuthors = playlistForm.addAuthors;
 const sidebar = document.getElementById('sidebar');
 const playlist = document.getElementById('playlist');
 const toggleButton = document.getElementById('toggleSelect');
+const deleteButton = document.getElementById('deleteButton');
 const contentHeader = document.getElementById('content__header');
 const sidebarHeader = document.getElementById('sidebar__header');
 
@@ -148,7 +149,7 @@ function validateField(field) {
 function onSubmit(e) {
     e.preventDefault();
     let validationMessage = '';
-    console.log(submitType);
+    //console.log(submitType);
     if (submitType === "song") {
         if (!songNameValid) {
             validationMessage = "Fältet 'Song name' är obligatoriskt!";
@@ -185,7 +186,7 @@ function onSubmit(e) {
         }
     }
     else if (submitType === "playlist") {
-        console.log('test');
+        //console.log('test');
         if (!playlistNameValid) {
             validationMessage = "Fältet 'Playlist name' är obligatoriskt!";
             document.getElementById('playlistNameError').innerText = validationMessage;
@@ -214,8 +215,8 @@ function saveSong() {
         albumArt: songForm.addAlbumArt.value,
         songLength: songForm.addLength.value
     };
-    
-    api.addSongToPlaylist(0, song).then((song) => { if (song) renderPlayList(selectedPlaylist); });
+    console.log(selectedPlaylist);
+    api.addSongToPlaylist(selectedPlaylist, song).then((song) => { if (song) renderPlayList(selectedPlaylist); });
     
     //songName.value = '';
     //year.value = '';
@@ -240,26 +241,37 @@ function savePlaylist() {
     api.createPlayList(playlistData).then((playlist) => { if (playlist) renderSelection(); });
 }
 
+function deleteSong(song_id) {
+    api.deleteSongFromPlaylist(selectedPlaylist, song_id).then(() => renderPlayList(selectedPlaylist));
+}
+
+function deletePlaylist() {
+    api.deletePlaylist(selectedPlaylist).then(() => renderSelection());
+}
+
 function renderPlayList(playlist_id) {
     const selection = document.getElementById('content__selection');
-
+    if (selection) selection.remove();
     submitType = "song";
     
     toggleButton.classList.remove('hidden');
+    deleteButton.classList.remove('hidden');
     html = `<button onclick="renderSelection()">Välj ny spellista</button>`;
     
     songForm.classList.remove('hidden');
     playlistForm.classList.add('hidden');
     sidebarHeader.innerText = "Lägg till låt";
+    
     contentHeader.insertAdjacentHTML('beforeend', html);
     
 
     api.getPlaylistByID(playlist_id).then(result => {
         playlist.innerHTML = '';
-        selectedPlaylist = result.id;
+        selectedPlaylist = result.playListName;
         contentHeader.innerText = result.playListName;
         // README: Resultatet vi får tbx är spellistan i format av vår JSON-Schema.
         // Plocka ut informationen ni behöver ifrån den!
+        console.log(result);
         if (result) {
             playlist.insertAdjacentHTML('beforeend', PlayList(result));
         }
@@ -275,6 +287,7 @@ function renderSelection() {
 
     songForm.classList.add('hidden');
     toggleButton.classList.add('hidden');
+    deleteButton.classList.add('hidden');
     playlistForm.classList.remove('hidden');
 
     const exists = document.getElementById('content__selection');

@@ -89,20 +89,20 @@ class Api {
      * @param data
      */
     addSongToPlaylist(playlist_id, data) {
-        const jData = {id: playlist_id, ...data}
-        const json = JSON.stringify(jData)
-        console.log(`Sending request to add "Song" to "Playlist" with id: ${playlist_id}`)
+        const jData = {id: playlist_id, ...data};
+        const json = JSON.stringify(jData);
+        console.log(`Sending request to add "Song" to "Playlist" with id: ${playlist_id}`);
         const request = new Request(this.songURL, {
             method: 'PUT',
             body: json,
             headers: {
                 'content-type': 'application/json'
             }
-        })
-        console.log(request)
+        });
+        console.log(request);
         return fetch(request)
             .then((result) => result.json()).then((data) => data)
-            .catch((e) => console.log(e))
+            .catch((e) => console.log(e));
     }
 
     /**
@@ -111,19 +111,19 @@ class Api {
      * @param {string} data
      */
     updateSongInPlaylist(playlist_id, data) {
-        const json = JSON.stringify(data)
-        console.log(`Sending request to update "Song" in "Playlist" with id: ${playlist_id}`)
-        const jData = {id: playlist_id, ...json}
+        const json = JSON.stringify(data);
+        console.log(`Sending request to update "Song" in "Playlist" with id: ${playlist_id}`);
+        const jData = {id: playlist_id, ...json};
         const request = new Request(this.songURL, {
             method: 'PATCH',
             body: jData,
             headers: {
                 'content-type': 'application/json'
             }
-        })
+        });
         return fetch(request)
             .then((result) => result.json()).then((data) => data)
-            .catch((e) => console.log(e))
+            .catch((e) => console.log(e));
     }
 
     /**
@@ -132,18 +132,18 @@ class Api {
      * @param {string} data
      */
     deleteSongFromPlaylist(playlist_id, data) {
-        const json = JSON.stringify(data)
-        console.log(`Sending request to remove "Song" from "Playlist" with id: ${playlist_id}`)
-        const jData = {id: playlist_id, ...json}
+        const json = JSON.stringify(data);
+        console.log(`Sending request to remove "Song" from "Playlist" with id: ${playlist_id}`);
+        const jData = {id: playlist_id, ...json};
         const request = new Request(this.songURL, {
             method: 'DELETE',
             body: jData,
             headers: {
                 'content-type': 'application/json'
             }
-        })
+        });
         return fetch(request)
             .then((result) => result.json()).then((data) => data)
-            .catch((e) => console.log(e))
+            .catch((e) => console.log(e));
     }
 }

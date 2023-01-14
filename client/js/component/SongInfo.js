@@ -34,5 +34,8 @@ const SongInfo = (song) => {
         <td class="pr-12">${song.albumName}</td>
         <td class="pr-12">${song.releaseYear}</td>
         <td class="pr-12">${song.songLength}</td>
+        <td class="pr-6">
+          <button onclick="deleteSong(${song.id})" class="inline-block bg-slate-300 text-xs text-black border-2 border-black px-3 py-3 rounded-md ml-2"></button>
+        </td>
       </tr>`;
 }
