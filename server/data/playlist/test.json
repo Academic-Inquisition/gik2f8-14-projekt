@@ -1,18 +1,8 @@
 {
-  "id": 0,
+  "id": 1,
   "playListName": "Test",
   "authors": [
-    "Test"
+    "Simon"
   ],
-  "songs": [
-    {
-      "id": 1,
-      "songName": "Test",
-      "releaseYear": "1995",
-      "artists": "Simon",
-      "albumName": "Death",
-      "albumArt": "",
-      "songLength": "55:55"
-    }
-  ]
+  "songs": []
 }

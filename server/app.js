@@ -66,8 +66,9 @@ app.get('/tasks/playlist/', async (req, res) => {
  */
 app.get('/tasks/playlist/:id', async (req, res) => {
     try {
-        console.log(req.params.id);
-        const file = await fs.readFile('./data/playlist/' + req.params.id);
+        let id = req.params.id;
+        if (!id.endsWith(".json")) id = id + ".json"
+        const file = await fs.readFile('./data/playlist/' + id);
         let playlist = JSON.parse(file);
         console.log(playlist);
         res.send(playlist);
@@ -83,14 +84,15 @@ app.get('/tasks/playlist/:id', async (req, res) => {
 app.delete('/tasks/playlist/:id', async (req, res) => {
     try {
         const body = req.body
-        const id = req.params.id;
+        const id = req.params.id.toLowerCase();
         const listBuffer = await fs.readFile('./data/playlists.json');
         const currentPlaylists = JSON.parse(listBuffer);
         if (currentPlaylists.length > 0) {
             await fs.writeFile('./data/playlists.json',
-                JSON.stringify(currentPlaylists.filter((playlist) => playlist.id != id))
+                JSON.stringify(currentPlaylists.filter((playlist) => playlist !== id + ".json"))
             );
-            await fs.unlink(`./data/playlist/${id}`)
+            console.log(__dirname + `/data/playlist/${id + ".json"}`)
+            await fs.unlink(__dirname + `/data/playlist/${id + ".json"}`)
             res.send({message: `Spellistan med namnet ${body.playListName} togs bort`});
         } else {
             res.status(404).send({error: 'Ingen spellista att ta bort'});
@@ -111,19 +113,22 @@ app.put('/tasks/playlist/song/', async (req, res) => {
         const buffer = await fs.readFile('./data/playlists.json');
         let list = JSON.parse(buffer);
         if (list && list.length > 0) {
-            const buf = await fs.readFile('./data/playlist/' + list[body.id]);
+            const buf = await fs.readFile('./data/playlist/' + body.id.toLowerCase() + ".json");
             let playlist = JSON.parse(buf);
             let maxSongId = 0;
             if (playlist["songs"] && playlist["songs"].length > 0) {
-                maxSongId = playlist.reduce(
-                    (maxId, current) => current.id > maxId ? current.id : maxId, maxSongId
-                );
+                for (let i = 0; i < playlist["songs"].length; i++) {
+                    let songs = playlist["songs"]
+                    let song = songs[i]
+                    song.id = i
+                }
+                maxSongId = playlist["songs"].length;
             }
             if (playlist) {
-                let id = body.id;
-                body.id = maxSongId + 1;
+                let fn = body.id.toLowerCase() + ".json";
+                body.id = maxSongId;
                 playlist["songs"].push(body);
-                await fs.writeFile('./data/playlist/' + list[id], JSON.stringify(playlist, null, 2));
+                await fs.writeFile('./data/playlist/' + fn, JSON.stringify(playlist, null, 2));
                 res.send({message: `Låten med namnet ${body.songName} lades till`, dat: playlist});
             }
         }
@@ -133,6 +138,50 @@ app.put('/tasks/playlist/song/', async (req, res) => {
 });
 
 /**
+ * Method: DELETE
+ * Comment: Removes a specific song from the playlist in the backend.
+ */
+app.delete('/tasks/playlist/song/:id', async (req, res) => {
+    try {
+        const body = req.body;
+        if (body.song_id != null) {
+            let fn = req.params.id + ".json";
+            const buf = await fs.readFile('./data/playlist/' + fn);
+            let playlist = JSON.parse(buf);
+            if (playlist) {
+                let songs = playlist.songs;
+                for (let song in songs) {
+                    if (songs[song].id === body.song_id) {
+                        songs.splice(song, 1)
+                        if (songs && playlist["songs"].length > 0) {
+                            for (let i = 0; i < playlist["songs"].length; i++) {
+                                let songs = playlist["songs"]
+                                let song = songs[i]
+                                song.id = i
+                            }
+                        }
+                        await fs.writeFile('./data/playlist/' + fn, JSON.stringify(playlist, null, 2));
+                        res.send({message: `Låten med id ${body.song_id} togs bort till`, dat: playlist});
+                        break;
+                    }
+                }
+            }
+        }
+    } catch (error) {
+        res.status(500).send({error});
+    }
+});
+
+/**
+ * Opens up the ExpressJS / NodeJS server to listen to the PORT variable.
+ * Full Default Address: `http://localhost:5000`
+ */
+app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
+
+
+
+/**
+ * NYI
  * Method: PATCH
  * Comment: Updates a specific song from the playlist in the backend.
  */
@@ -152,42 +201,9 @@ app.patch('/tasks/playlist/song/', async (req, res) => {
                         break
                     }
                 }
-                let position = playlist.indexOf(body.song)
             }
         }
     } catch (error) {
         res.status(500).send({error});
     }
 });
-
-/**
- * Method: DELETE
- * Comment: Removes a specific song from the playlist in the backend.
- */
-app.delete('/tasks/playlist/song/', async (req, res) => {
-    try {
-        const body = req.body;
-        const buffer = await fs.readFile('./data/playlists.json');
-        let list = JSON.parse(buffer);
-        if (body.id && list && list.length > 0) {
-            const buf = await fs.readFile('./data/' + list[body.id] + ".json");
-            let playlist = JSON.parse(buf);
-            if (playlist) {
-                let songs = playlist.songs;
-                let songToRemove = null;
-                songs.forEach((song) => {
-                    if (song.id == body.song_id) songToRemove = song;
-                });
-                songs.remove(songToRemove);
-            }
-        }
-    } catch (error) {
-        res.status(500).send({error});
-    }
-});
-
-/**
- * Opens up the ExpressJS / NodeJS server to listen to the PORT variable.
- * Full Default Address: `http://localhost:5000`
- */
-app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));

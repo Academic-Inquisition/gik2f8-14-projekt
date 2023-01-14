@@ -43,11 +43,11 @@ class Api {
 
     /**
      * Method for getting a specific Playlist.
-     * @param {int} playlist_id
+     * @param {string} playlist_id
      */
     getPlaylistByID(playlist_id) {
         console.log(this.playListURL + playlist_id)
-        return fetch(this.playListURL + playlist_id.toString(), {method: 'GET'})
+        return fetch(this.playListURL + playlist_id, {method: 'GET'})
             .then((result) => result.json()).then((data) => data)
             .catch((e) => console.log(e))
     }
@@ -132,18 +132,23 @@ class Api {
      * @param {string} data
      */
     deleteSongFromPlaylist(playlist_id, data) {
-        const json = JSON.stringify(data);
-        console.log(`Sending request to remove "Song" from "Playlist" with id: ${playlist_id}`);
-        const jData = {id: playlist_id, ...json};
-        const request = new Request(this.songURL, {
+        console.log(`Sending request to remove "Song" from "Playlist" with id: ${data}`);
+        const jData = {song_id: data};
+        const request = new Request(this.songURL + playlist_id.toString().toLowerCase(), {
             method: 'DELETE',
-            body: jData,
+            body: JSON.stringify(jData),
             headers: {
                 'content-type': 'application/json'
             }
         });
         return fetch(request)
-            .then((result) => result.json()).then((data) => data)
+            .then((result) => {
+                console.log(result.json())
+                return result.json()
+            }).then((data) => {
+                console.log(data)
+                return data;
+            })
             .catch((e) => console.log(e));
     }
 }

@@ -149,7 +149,6 @@ function validateField(field) {
 function onSubmit(e) {
     e.preventDefault();
     let validationMessage = '';
-    //console.log(submitType);
     if (submitType === "song") {
         if (!songNameValid) {
             validationMessage = "Fältet 'Song name' är obligatoriskt!";
@@ -263,9 +262,9 @@ function renderPlayList(playlist_id) {
     sidebarHeader.innerText = "Lägg till låt";
     
     contentHeader.insertAdjacentHTML('beforeend', html);
-    
+    selectedPlaylist = playlist_id.toLowerCase()
 
-    api.getPlaylistByID(playlist_id).then(result => {
+    api.getPlaylistByID(selectedPlaylist).then(result => {
         playlist.innerHTML = '';
         selectedPlaylist = result.playListName;
         contentHeader.innerText = result.playListName;
@@ -298,7 +297,7 @@ function renderSelection() {
         if (playlists) {
             if (exists) exists.remove()
             for (let i = 0; i < playlists.length; i++){
-                html += PlaylistSelect(`${playlists[i]}`, i);
+                html += PlaylistSelect(`${playlists[i]}`);
             }
             content.insertAdjacentHTML('beforeend', html);
         }
