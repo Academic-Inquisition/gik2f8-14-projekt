@@ -255,13 +255,11 @@ function renderPlayList(playlist_id) {
     
     toggleButton.classList.remove('hidden');
     deleteButton.classList.remove('hidden');
-    html = `<button onclick="renderSelection()">Välj ny spellista</button>`;
     
     songForm.classList.remove('hidden');
     playlistForm.classList.add('hidden');
     sidebarHeader.innerText = "Lägg till låt";
     
-    contentHeader.insertAdjacentHTML('beforeend', html);
     selectedPlaylist = playlist_id.toLowerCase()
 
     api.getPlaylistByID(selectedPlaylist).then(result => {
