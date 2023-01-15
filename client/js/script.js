@@ -25,7 +25,6 @@ const playlistForm = document.getElementById('playlistForm');
 const playlistName = playlistForm.addPlaylistName;
 const playlistAuthors = playlistForm.addAuthors;
 
-const sidebar = document.getElementById('sidebar');
 const playlist = document.getElementById('playlist');
 const toggleButton = document.getElementById('toggleSelect');
 const deleteButton = document.getElementById('deleteButton');
@@ -109,10 +108,6 @@ function validateField(field) {
             if (value.length === 0){
                 songNameValid = false;
                 validationMessage = "Fältet 'Song length' är obligatoriskt!";
-            }
-            else if (value.length !== 5){
-                songLengthValid = true;
-                validationMessage = "Använd formatet mm:ss!";
             }
             else {
                 songLengthValid = true;
@@ -215,19 +210,22 @@ function saveSong() {
         songLength: songForm.addLength.value
     };
     console.log(selectedPlaylist);
-    api.addSongToPlaylist(selectedPlaylist, song).then((song) => { if (song) renderPlayList(selectedPlaylist); });
-    
-    //songName.value = '';
-    //year.value = '';
-    //artists.value = '';
-    //albumName.value = '';
-    //albumArt.value = '';
-    //songLength.value = '';
-
-    //songNameValid = false;
-    //yearValid = false;
-    //artistsValid = false;
-    //albumNameValid = false;
+    api.addSongToPlaylist(selectedPlaylist, song).then((song) => {
+        if (song) {
+            renderPlayList(selectedPlaylist);
+            songName.value = '';
+            year.value = '';
+            artists.value = '';
+            albumName.value = '';
+            albumArt.value = '';
+            songLength.value = '';
+            songNameValid = false;
+            yearValid = false;
+            artistsValid = false;
+            albumNameValid = false;
+            songLengthValid = false;
+        }
+    });
 }
 
 function savePlaylist() {
@@ -237,7 +235,15 @@ function savePlaylist() {
         songs: []
     };
 
-    api.createPlayList(playlistData).then((playlist) => { if (playlist) renderSelection(); });
+    api.createPlayList(playlistData).then((playlist) => {
+        if (playlist) {
+            renderSelection();
+            playlistName.value = '';
+            playlistAuthors.value = '';
+            playlistNameValid = false;
+            playlistAuthorsValid = false;
+        }
+    });
 }
 
 function deleteSong(song_id) {

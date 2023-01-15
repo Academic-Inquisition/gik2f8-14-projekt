@@ -28,13 +28,20 @@ app.put('/tasks/playlist/', async (req, res) => {
         const currentPlaylists = JSON.parse(listBuffer);
         let maxListId = 0;
         if (currentPlaylists && currentPlaylists.length > 0) {
-            maxListId = currentPlaylists.reduce(
-                (maxId, current) => current.id > maxId ? current.id : maxId, maxListId
-            );
+            for (let i=0; i < currentPlaylists.length; i++) {
+                let buf = await fs.readFile(`./data/playlist/${currentPlaylists[i]}`);
+                let playlist = JSON.parse(buf);
+                let id = playlist.id;
+                if ((maxListId - id) >= 0) {
+                    maxListId += 1;
+                } else {
+                    break
+                }
+            }
         }
         const newId = [body.playListName.toLowerCase() + ".json"];
         const newPlaylist = currentPlaylists ? [...currentPlaylists, body.playListName.toLowerCase() + ".json"] : [newId];
-        const plData = body ? {id: maxListId + 1, ...body} : [body];
+        const plData = body ? {id: maxListId, ...body} : [body];
         await fs.writeFile('./data/playlists.json', JSON.stringify(newPlaylist, null, 2));
         await fss.mkdir(path.join(__dirname, '/data/playlist'), {recursive: true},(err) => {
             if (err) return console.log(err)
@@ -110,11 +117,9 @@ app.put('/tasks/playlist/song/', async (req, res) => {
     try {
         const body = req.body;
         console.log(body);
-        const buffer = await fs.readFile('./data/playlists.json');
-        let list = JSON.parse(buffer);
-        if (list && list.length > 0) {
-            const buf = await fs.readFile('./data/playlist/' + body.id.toLowerCase() + ".json");
-            let playlist = JSON.parse(buf);
+        const buf = await fs.readFile('./data/playlist/' + body.id.toLowerCase() + ".json");
+        let playlist = JSON.parse(buf);
+        if (buf) {
             let maxSongId = 0;
             if (playlist["songs"] && playlist["songs"].length > 0) {
                 for (let i = 0; i < playlist["songs"].length; i++) {
@@ -133,7 +138,7 @@ app.put('/tasks/playlist/song/', async (req, res) => {
             }
         }
     } catch (error) {
-        res.status(500).send({error});
+        res.status(500).send({error: error.stack});
     }
 });
 
@@ -168,7 +173,7 @@ app.delete('/tasks/playlist/song/:id', async (req, res) => {
             }
         }
     } catch (error) {
-        res.status(500).send({error});
+        res.status(500).send({error: error.stack});
     }
 });
 

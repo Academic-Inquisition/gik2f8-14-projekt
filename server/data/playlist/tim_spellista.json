@@ -1,0 +1,27 @@
+{
+  "id": 1,
+  "playListName": "tim_spellista",
+  "authors": [
+    "Tim"
+  ],
+  "songs": [
+    {
+      "id": 0,
+      "songName": "Nothing Else Matters",
+      "releaseYear": "1991",
+      "artists": "Metallica",
+      "albumName": "Metallica",
+      "albumArt": "https://www.albumartexchange.com/coverart/_tn/me/metallica_metallicablackalbum_73p.jpg",
+      "songLength": "6:38"
+    },
+    {
+      "id": 1,
+      "songName": "Stairway to Heaven",
+      "releaseYear": "1971",
+      "artists": "Led Zeppelin",
+      "albumName": "Led Zeppelin IV",
+      "albumArt": "https://www.albumartexchange.com/coverart/_tn/le/ledzeppelin_ledzeppeliniv12_crcx.jpg",
+      "songLength": "8:02"
+    }
+  ]
+}
